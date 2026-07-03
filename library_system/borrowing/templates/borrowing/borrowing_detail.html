@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Borrowing Detail{% endblock %}
+{% block content %}
+<h1>Borrowing Record</h1>
+<p><strong>Book:</strong> <a class="item-link" href="{% url 'books:book_detail' borrowing.book.pk %}">{{ borrowing.book.title }}</a></p>
+<p><strong>Member:</strong> <a class="item-link" href="{% url 'members:member_detail' borrowing.member.pk %}">{{ borrowing.member.name }}</a></p>
+<p><strong>Borrow Date:</strong> {{ borrowing.borrow_date }}</p>
+<p><strong>Return Date:</strong> {{ borrowing.return_date|default:"Not returned yet" }}</p>
+<p><strong>Returned?</strong> {{ borrowing.is_returned|yesno:"Yes,No" }}</p>
+
+<a class="back-link" href="{% url 'borrowing:borrowing_list' %}">&larr; Back to Borrowing Records</a>
+{% endblock %}

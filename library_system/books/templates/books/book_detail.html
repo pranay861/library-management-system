@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{{ book.title }}{% endblock %}
+{% block content %}
+<h1>{{ book.title }}</h1>
+<p><strong>Author:</strong> <a class="item-link" href="{% url 'authors:author_detail' book.author.pk %}">{{ book.author.name }}</a></p>
+<p><strong>ISBN:</strong> {{ book.isbn }}</p>
+<p><strong>Genre:</strong> {{ book.genre|default:"Not specified" }}</p>
+<p><strong>Publication Date:</strong> {{ book.publication_date|default:"Unknown" }}</p>
+<p><strong>Status:</strong>
+    {% if book.status == 'available' %}
+    <span class="status-available">Available</span>
+    {% else %}
+    <span class="status-borrowed">Borrowed</span>
+    {% endif %}
+</p>
+
+<a class="back-link" href="{% url 'books:book_list' %}">&larr; Back to Book Catalog</a>
+{% endblock %}

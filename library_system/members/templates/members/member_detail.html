@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ member.name }}{% endblock %}
+{% block content %}
+<h1>{{ member.name }}</h1>
+<p><strong>Email:</strong> {{ member.email }}</p>
+<p><strong>Phone:</strong> {{ member.phone|default:"Not provided" }}</p>
+<p><strong>Address:</strong> {{ member.address|default:"Not provided" }}</p>
+<p><strong>Membership Date:</strong> {{ member.membership_date }}</p>
+
+<h3>Borrowing History</h3>
+<table>
+    <tr>
+        <th>Book</th>
+        <th>Borrow Date</th>
+        <th>Return Date</th>
+        <th>Returned?</th>
+    </tr>
+    {% for record in borrowings %}
+    <tr>
+        <td><a class="item-link" href="{% url 'books:book_detail' record.book.pk %}">{{ record.book.title }}</a></td>
+        <td>{{ record.borrow_date }}</td>
+        <td>{{ record.return_date|default:"Not returned yet" }}</td>
+        <td>{{ record.is_returned|yesno:"Yes,No" }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">No borrowing history.</td></tr>
+    {% endfor %}
+</table>
+
+<a class="back-link" href="{% url 'members:member_list' %}">&larr; Back to Member List</a>
+{% endblock %}
